@@ -1,0 +1,17 @@
+{
+  "name": "foxdev-plugin-power-manager",
+  "version": "0.0.0",
+  "description": "",
+  "cordova": {
+    "id": "foxdev-plugin-power-manager",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC"
+}

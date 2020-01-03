@@ -1,0 +1,13 @@
+# Cordova
+/platforms
+node_modules
+
+bin/*
+!/plugins
+!/plugins/android.json
+!/plugins/fetch.json
+plugins/*
+platforms/*
+
+# Editors
+.idea/
