@@ -29,10 +29,58 @@ var app = {
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
         
-        alert('wakeIn 10s');
-        setTimeout(function () {
-			cordova.plugins.powerManager.wakeDevice()
-		}, 10000);
+        
+        // alert('wakeIn 10s');
+        // setTimeout(function () {
+		// 	cordova.plugins.powerManager.wakeDevice()
+		// }, 10000);
+	
+		
+		
+		
+		const push = PushNotification.init({
+			android: {
+			},
+		});
+		
+		push.on('registration', (data) => {
+			// data.registrationId
+			
+			var postData = {
+				registrationId: data.registrationId
+			};
+			
+			$.ajax({
+				url: 'https://88393ca4.ngrok.io/register',
+				method: 'POST',
+				data: postData,
+				success: function () {
+					//alert('ajax:success');
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					//alert('ajax:error: ' + textStatus + errorThrown);
+				},
+			});
+			//alert('push:registrationqq ' + JSON.stringify(data));
+		});
+		
+		push.on('notification', (data) => {
+			// data.message,
+			// data.title,
+			// data.count,
+			// data.sound,
+			// data.image,
+			// data.additionalData
+			alert('push:notification ' + JSON.stringify(data));
+			
+			cordova.plugins.powerManager.wakeDevice();
+		});
+		
+		push.on('error', (e) => {
+			// e.message
+			alert('push:error ' + JSON.stringify(e));
+		});
+		
     },
 
     // Update DOM on a Received Event
