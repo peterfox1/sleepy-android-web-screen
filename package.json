@@ -17,7 +17,7 @@
   "cordova-browser": "^6.0.0",
   "cordova-support-google-services": "^1.3.2",
   "phonegap-plugin-multidex": "^1.0.0",
-  "phonegap-plugin-push": "^2.3.0"
+  "phonegap-plugin-push": "git+https://github.com/peterfox1/phonegap-plugin-push-wake-device.git#device-wake"
  },
  "devDependencies": {
   "cordova-plugin-whitelist": "^1.3.4"
