@@ -35,7 +35,13 @@ var app = {
 		// 	cordova.plugins.powerManager.wakeDevice()
 		// }, 10000);
 	
-		
+	
+		function setUrl(url) {
+			$('.webScreenIframe').attr('src', url);
+		}
+		function reload() {
+			$('.webScreenIframe').attr('src', function(i, val) { return val; });
+		}
 		
 		
 		const push = PushNotification.init({
@@ -47,11 +53,11 @@ var app = {
 			// data.registrationId
 			
 			var postData = {
-				registrationId: data.registrationId
+				pushId: data.registrationId
 			};
 			
 			$.ajax({
-				url: 'https://88393ca4.ngrok.io/register',
+				url: 'https://86ea3e81.ngrok.io/_register',
 				method: 'POST',
 				data: postData,
 				success: function () {
@@ -64,16 +70,40 @@ var app = {
 			//alert('push:registrationqq ' + JSON.stringify(data));
 		});
 		
-		push.on('notification', (data) => {
+		push.on('notification', (payload) => {
+			//payload.additionalData
+			
+			var data = {
+				'_action': 'wake',	// wake|url
+				'_actionData': {},
+			};
+			$.extend(data, payload.additionalData);
+			
+			var action = data._action;
+			var actionData = data._actionData;
+			
+			if (action == 'url') {
+				
+				if (
+					typeof(actionData.url) === 'string'
+					&&
+					actionData.url.indexOf('http') === 0
+				) {
+					setUrl(actionData.url);
+				}
+				else {
+					reload();
+				}
+				
+			}
+			
 			// data.message,
 			// data.title,
 			// data.count,
 			// data.sound,
 			// data.image,
 			// data.additionalData
-			alert('push:notification ' + JSON.stringify(data));
-			
-			cordova.plugins.powerManager.wakeDevice();
+			//alert('push:notificationy ' + JSON.stringify(data));
 		});
 		
 		push.on('error', (e) => {
